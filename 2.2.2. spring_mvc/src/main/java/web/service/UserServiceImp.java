@@ -19,7 +19,7 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public List<Car> getCarList(int cout, List<Car> carList) {
-        return userDao.getCarList(cout, carList) ;
+    public List<Car> getCarList(int cout) {
+        return userDao.getCarList(cout) ;
     }
 }
