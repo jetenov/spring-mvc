@@ -2,16 +2,15 @@ package web.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import web.dao.UserDao;
-import web.dao.UserDaoImp;
+import web.dao.CarDao;
 import web.model.Car;
 
 import java.util.List;
 
 @Service
-public class UserServiceImp implements UserService {
+public class CarServiceImp implements CarService {
     @Autowired
-    private UserDao userDao;
+    private CarDao userDao;
 
     @Override
     public List<Car>  createCarList() {

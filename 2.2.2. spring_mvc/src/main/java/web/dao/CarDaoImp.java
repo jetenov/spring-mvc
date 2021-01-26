@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class UserDaoImp implements UserDao {
+public class CarDaoImp implements CarDao {
     private List<Car> carList;
     {
         carList = new ArrayList<>();
