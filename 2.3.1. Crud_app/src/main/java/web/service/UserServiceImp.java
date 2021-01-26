@@ -1,12 +1,17 @@
 package web.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import web.dao.UserDao;
 import web.dao.UserDaoImp;
-import web.model.Car;
+import web.model.User;
 
 import java.util.List;
 
+@Service
 public class UserServiceImp implements UserService {
+
+    @Autowired
     private UserDao userDao;
 
     public UserServiceImp() {
@@ -14,12 +19,12 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public List<Car>  createCarList() {
+    public List<User>  createCarList() {
         return userDao.createCarList();
     }
 
     @Override
-    public List<Car> getCarList(int cout, List<Car> carList) {
-        return userDao.getCarList(cout, carList) ;
+    public List<User> getCarList(int count) {
+        return userDao.getCarList(count) ;
     }
 }
