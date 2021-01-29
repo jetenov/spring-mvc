@@ -1,40 +1,51 @@
 package web.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "user")
 public class User {
-    private int series;
-    private String name;
-    private String color;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "name")
+    private String firstName;
+
+    @Column(name = "last_name")
+    private String lastName;
+
 
     public User() {
     }
 
-    public User(int series, String name, String color) {
-        this.series = series;
-        this.name = name;
-        this.color = color;
+    public User(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
-    public int getSeries() {
-        return series;
+    public Long getId() {
+        return id;
     }
 
-    public void setSeries(int series) {
-        this.series = series;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getColor() {
-        return color;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setColor(String color) {
-        this.color = color;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
+
 }

@@ -1,29 +1,45 @@
 package web.dao;
 
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import web.model.User;
 
-import java.util.ArrayList;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
 public class UserDaoImp implements UserDao {
-    private List<User> userList;
-    {
-        userList = new ArrayList<>();
-        userList.add(new User(777, "Porsh", "red"));
-        userList.add(new User(888, "Ferrari", "blue"));
-        userList.add(new User(999, "Lambo", "orange"));
-        userList.add(new User(100, "Toyota", "white"));
-        userList.add(new User(000, "BMW", "black"));
-    }
+    @Autowired
+    private SessionFactory sessionFactory;
+
     @Override
-    public List<User>  createCarList() {
-        return userList;
+    public void add(User user) {
+        sessionFactory.getCurrentSession().save(user);
     }
 
     @Override
-    public List<User> getCarList(int count) {
-        return userList.subList(0, count);
+    public List<User> UserList() {
+        TypedQuery<User> query=sessionFactory.getCurrentSession().createQuery("from User");
+        return query.getResultList();
     }
+
+    @Override
+    public User getById(Long id) {
+        return sessionFactory.getCurrentSession().get(User.class, id);
+    }
+
+    @Override
+    public void update(User user) {
+        sessionFactory.getCurrentSession().update(user);
+    }
+
+    @Override
+    public void delete(User user) {
+        sessionFactory.getCurrentSession().delete(user);
+    }
+
+
 }
