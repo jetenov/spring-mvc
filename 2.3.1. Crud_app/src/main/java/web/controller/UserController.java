@@ -24,24 +24,31 @@ public class UserController {
         return "index";
     }
 
-    @GetMapping("/add")
+    @GetMapping("/admin")
+    public String adminUsers(ModelMap model) {
+        model.addAttribute("users", userService.UserList());
+        return "admin";
+    }
+
+
+    @GetMapping("/admin/add")
     public String addUser(@ModelAttribute("user") User user) {
         return "add";
     }
 
-    @PostMapping()
+    @PostMapping("/admin")
     public String newUser(@ModelAttribute("user") User user) {
         userService.add(user);
-        return "redirect:/";
+        return "redirect:/admin";
     }
 
-    @GetMapping("/show")
+    @GetMapping("/user")
     public String showUser(Model model, @RequestParam(required = false, defaultValue = "jetenov") String s) {
         model.addAttribute("user", userService.loadUserByUsername(s));
-        return "show";
+        return "user";
     }
 
-    @GetMapping("/edit")
+    @GetMapping("/admin/edit")
     public String editUser(Model model, @RequestParam(required = false, defaultValue = "1") Long id) {
         model.addAttribute("user", userService.getById(id));
         return "edit";
@@ -50,13 +57,13 @@ public class UserController {
     @PatchMapping("/{id}")
     public String update(@ModelAttribute("user") User user) {
         userService.update(user);
-        return "redirect:/";
+        return "redirect:/admin";
     }
 
     @DeleteMapping("/{id}")
     public String delete(@ModelAttribute("user") User user) {
         userService.delete(user);
-        return "redirect:/";
+        return "redirect:/admin";
     }
 
 

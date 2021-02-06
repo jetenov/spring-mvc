@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import web.config.handler.LoginSuccessHandler;
 import web.service.UserService;
 import web.service.UserServiceImp;
@@ -33,10 +34,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // http.csrf().disable(); - попробуйте выяснить сами, что это даёт
         http.authorizeRequests()
                 //.antMatchers("/").permitAll() // доступность всем
-                .antMatchers("/").access("hasAnyRole('ROLE_ADMIN')") // разрешаем входить на /user пользователям с ролью User
-                .antMatchers("/users/show").access("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+                .antMatchers("/admin/**").access("hasAnyRole('ROLE_ADMIN')") // разрешаем входить на /user пользователям с ролью User
+                .antMatchers("/user").access("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
                 .and().formLogin()  // Spring сам подставит свою логин форму
-                .successHandler(loginSuccessHandler); // подключаем наш SuccessHandler для перенеправления по ролям
+                .successHandler(loginSuccessHandler) // подключаем наш SuccessHandler для перенеправления по ролям
+                .and()
+                .logout()
+                .logoutUrl("/logout")
+                .permitAll()
+                .logoutSuccessUrl("/");
+
     }
 
     @Bean
