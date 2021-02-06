@@ -35,6 +35,12 @@ public class UserController {
         return "redirect:/";
     }
 
+    @GetMapping("/show")
+    public String showUser(Model model, @RequestParam(required = false, defaultValue = "jetenov") String s) {
+        model.addAttribute("user", userService.loadUserByUsername(s));
+        return "show";
+    }
+
     @GetMapping("/edit")
     public String editUser(Model model, @RequestParam(required = false, defaultValue = "1") Long id) {
         model.addAttribute("user", userService.getById(id));

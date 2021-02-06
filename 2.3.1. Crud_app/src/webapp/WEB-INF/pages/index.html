@@ -11,15 +11,15 @@
     <tr>
         <th>index</th>
         <th>id</th>
-        <th>firstName</th>
-        <th>lastName</th>
+        <th>userName</th>
+        <th>password</th>
         <th>edit</th>
     </tr>
     <tr th:each="user, state : ${users}">
         <td th:text="${state.index}">index</td>
         <td th:text="${user.getId()}">id</td>
-        <td th:text="${user.getFirstName()}">firstName</td>
-        <td th:text="${user.getLastName()}">lastName</td>
+        <td th:text="${user.getUsername()}">userName</td>
+        <td th:text="${user.getPassword()}">password</td>
         <td><a th:href = "@{edit(id=${user.getId()})}"> edit </a></td>
     </tr>
 </table>

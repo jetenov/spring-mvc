@@ -1,27 +1,26 @@
 package web.model;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.Set;
 
 @Entity
-@Table(name = "user")
-public class User {
+@Table(name = "users")
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "name")
-    private String firstName;
-
-    @Column(name = "last_name")
-    private String lastName;
-
+    private String username;
+    private String password;
+    @Transient
+    private String passwordConfirm;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Role> roles;
 
     public User() {
-    }
-
-    public User(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
     }
 
     public Long getId() {
@@ -32,20 +31,63 @@ public class User {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    @Override
+    public String getUsername() {
+        return username;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
     }
 
-    public String getLastName() {
-        return lastName;
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return getRoles();
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
 }
